@@ -10,7 +10,7 @@ from datetime import datetime
 target_pixel = None
 clicking_enabled = True
 toggle_key_pressed = False
-TARGET_COLOR = [(117, 253, 117),(117, 254, 117)]  # Set the RGB value you are looking for
+TARGET_COLOR = [(102, 255, 102),(102, 254, 102),(102, 254, 100)]  # Set the RGB value you are looking for
 
 
 target_pixel_chosen = threading.Event()
@@ -48,24 +48,24 @@ def search_for_cookie():
     target_pixel_chosen.wait()
     while True:
         if clicking_enabled:
-            cookie_location = pyautogui.locateOnScreen('cookie.png', grayscale= True, confidence=0.6 )
+            cookie_location = pyautogui.locateOnScreen('cookie.png', grayscale= True, confidence=0.7 )
             if cookie_location:
                 cookie_x = cookie_location.left + (cookie_location.width // 2)
                 cookie_y = cookie_location.top + (cookie_location.height // 2)              
                 print(timestamp(),"Cookie found at", cookie_x, cookie_y)
                 time.sleep(0.1)
                 click(cookie_x, cookie_y)
-        time.sleep(3)  # Wait for 10 seconds before the next search
+        time.sleep(.1)  # Wait for 10 seconds before the next search
 
 def search_for_color():
     target_pixel_chosen.wait()
     while True:
         if clicking_enabled:
             # Define the region (left, top, width, height)
-            search_region = (1687, 342, 70, 701)  # Set this to your desired region
-            print("Searching region:", search_region)
-            for x in range(search_region[0], search_region[0] + search_region[2], 3):  
-                for y in range(search_region[1] + search_region[3], search_region[1], -3):
+            search_region =(2333, 314, 10, 850)  # Set this to your desired region
+            print(timestamp(),"Searching region:", search_region)
+            for x in range(search_region[0], search_region[0] + search_region[2], 1):  
+                for y in range(search_region[1] + search_region[3], search_region[1], -1):
                     pixel_color = pyautogui.pixel(x, y)
                     for color in TARGET_COLOR:
                         if pixel_color == color:                         
